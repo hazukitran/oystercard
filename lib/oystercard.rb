@@ -17,4 +17,16 @@ class Oystercard
     self.balance -= spending
   end
 
+  def touch_in
+  
+  end
+
+  def touch_out
+
+  end
+
+  def in_journey?
+    true
+  end
+
 end

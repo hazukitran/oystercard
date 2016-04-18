@@ -23,7 +23,20 @@ describe Oystercard do
     oystercard.top_up(30)
     oystercard.deduct(15)
     expect(oystercard.balance).to eq 15
-
   end
 
+  describe '#touch_in' do
+    it { is_expected.to respond_to :touch_in }
+  end
+
+  describe '#touch_out' do
+    it { is_expected.to respond_to :touch_out }
+  end 
+
+  describe '#in_journey' do
+    it 'is in journey' do
+      oystercard.touch_in
+      expect(oystercard).to be_in_journey
+    end
+  end
 end
