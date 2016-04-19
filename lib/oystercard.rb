@@ -5,11 +5,10 @@ class Oystercard
 
   attr_reader :entry_station, :balance, :journeys, :journey
 
-  def initialize
+  def initialize(journey)
     @balance = 0
     @entry_station = ''
-    @journey = {}
-    @journeys = []
+    @journeys_list = []
   end
 
   def top_up(money)
@@ -31,12 +30,8 @@ class Oystercard
     @journey[:exit_station] = station
   end
 
-  def in_journey?
-    entry_station != nil
-  end
-
   def update_journeys
-    @journeys << journey
+    @journeys_list << journey
   end
 
   private
