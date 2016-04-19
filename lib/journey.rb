@@ -1,17 +1,16 @@
 class Journey
 
-  def initialize(complete_journey = {})
-    @journey = complete_journey
+  attr_accessor :entry_station
+  attr_reader :exit_station
+
+  def initialize
+    @output = {}
     @entry_station = nil
     @exit_station = nil
   end
 
-  def check_journey
-    if @journey[entry_station] != nil
-      in_journey?
-    else
-      @journeys[:entry_station] == nil || @journeys[:exit_station] == nil
-    end
+  def journey_complete?
+    !!entry_station && !!exit_station
   end
 
   # def in_journey?
