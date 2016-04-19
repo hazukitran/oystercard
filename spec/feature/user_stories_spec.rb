@@ -1,5 +1,5 @@
 describe 'User Stories' do
-
+  let(:station) { double :station }
   context 'when balance is show' do
     it 'shows default balance of 0' do
       oystercard = Oystercard.new
@@ -35,16 +35,16 @@ describe 'User Stories' do
         oystercard.top_up(0.50)
         oystercard.balance < Oystercard::MIN_FARE
         message = "Not enough fund for this journey" 
-        expect { oystercard.touch_in }.to raise_error message 
+        expect { oystercard.touch_in(station) }.to raise_error message 
       end
     end
 
     context 'when balance above £1' do
-      it 'allows touch_in' do
+      it 'allows touch_in(station)' do
         oystercard = Oystercard.new
         oystercard.top_up(5)
         oystercard.balance > Oystercard::MIN_FARE
-        expect(oystercard.touch_in).to be true 
+        expect(oystercard.touch_in(station)).to be true 
       end
     end
   end
@@ -54,7 +54,7 @@ describe 'User Stories' do
       it 'begins a journey' do
         oystercard = Oystercard.new
         oystercard.top_up(5)
-        oystercard.touch_in
+        oystercard.touch_in(station)
         expect(oystercard.in_journey?).to be true
       end
     end
@@ -63,7 +63,7 @@ describe 'User Stories' do
     #   it 'cannot be on a jounery' do
     #     oystercard = Oystercard.new
     #     oystercard.top_up(0.50)
-    #     oystercard.touch_in
+    #     oystercard.touch_in(station)
     #     expect(oystercard.in_journey?).to be false
     #   end
     # end
@@ -72,7 +72,7 @@ describe 'User Stories' do
   it 'deducts amount after each journey' do
     oystercard = Oystercard.new
     oystercard.top_up(90)
-    oystercard.touch_in
+    oystercard.touch_in(station)
     oystercard.touch_out
     expect(oystercard.balance).to eq 89
   end

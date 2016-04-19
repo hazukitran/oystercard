@@ -3,29 +3,31 @@ class Oystercard
   MAX_LIMIT = 90
   MIN_FARE = 1
 
-  attr_accessor :balance
+  attr_reader :entry_station, :balance
 
   def initialize
     @balance = 0
+    @entry_station = ''
   end
 
   def top_up(money)
     fail "Reach limit of £#{MAX_LIMIT}." if reach_limit?
-    self.balance += money
+    @balance += money
   end
 
-  def touch_in
+  def touch_in(station)
     fail "Not enough fund for this journey" if below_minimum?
+    @entry_station = station
     true
   end
 
   def touch_out
     deduct(MIN_FARE)
+    @entry_station = nil
   end
 
   def in_journey?
-    # false if touch_in
-    true
+    entry_station != nil
   end
 
   private
@@ -39,7 +41,7 @@ class Oystercard
     end
 
     def deduct(spending)
-      self.balance -= spending
+      @balance -= spending
     end
 end
 
