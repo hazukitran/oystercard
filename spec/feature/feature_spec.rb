@@ -6,5 +6,5 @@ oystercard = Oystercard.new
 oystercard.top_up(30)
 oystercard.touch_in(:station)
 oystercard.entry_station 
-oystercard.touch_out
+oystercard.touch_out(:station)
 oystercard.journeys

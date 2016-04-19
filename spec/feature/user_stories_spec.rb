@@ -23,8 +23,8 @@ describe 'User Stories' do
 
     it 'allows touch out' do
       oystercard = Oystercard.new
-      oystercard.touch_out
-      expect { oystercard.touch_out }.not_to raise_error
+      oystercard.touch_out(station)
+      expect { oystercard.touch_out(station) }.not_to raise_error
     end
   end 
 
@@ -73,7 +73,7 @@ describe 'User Stories' do
     oystercard = Oystercard.new
     oystercard.top_up(90)
     oystercard.touch_in(station)
-    oystercard.touch_out
+    oystercard.touch_out(station)
     expect(oystercard.balance).to eq 89
   end
 end

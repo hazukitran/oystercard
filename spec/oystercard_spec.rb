@@ -32,7 +32,7 @@ describe Oystercard do
     oystercard.top_up(30)
     oystercard.touch_in(entry_station)
     oystercard.touch_out(exit_station)
-    expect(oystercard.journeys).to eq journey
+    expect(oystercard.journeys).to include journey
   end
 
   describe '#touch_in' do
@@ -78,5 +78,4 @@ describe Oystercard do
       expect(oystercard.entry_station).to eq nil
     end
   end
-
 end
