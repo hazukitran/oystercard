@@ -28,13 +28,6 @@ describe Oystercard do
     expect{ oystercard.touch_out(exit_station) }.to change{oystercard.balance }.by(-1)
   end
 
-  it 'records the journey' do
-    oystercard.top_up(30)
-    oystercard.touch_in(entry_station)
-    oystercard.touch_out(exit_station)
-    expect(oystercard.journeys).to include journey
-  end
-
   describe '#touch_in' do
     context 'when balance below £1' do
       it 'raises an error' do
@@ -47,35 +40,9 @@ describe Oystercard do
     context 'when balance above £1' do
       it 'allows touch in' do
         oystercard.top_up(5)
-        expect(oystercard.touch_in(entry_station)).to be true
-      end
-    end
-
-    context 'logs journey' do
-      it 'entry entry_station' do
-        oystercard.top_up(10)
-        oystercard.touch_in(entry_station)
-        expect(oystercard.entry_station).to eq entry_station
+        expect(oystercard.touch_in(entry_station)).to be entry_station
       end
     end
   end
 
-  describe '#in_journey?' do
-    context 'when successfully touch in' do      
-      it 'begins on a journey' do
-        oystercard.top_up(5)
-        oystercard.touch_in(entry_station)
-        expect(oystercard.in_journey?).to be true
-      end
-    end
-  end
-
-  describe '#touch_out' do
-    it 'return nil for entry_station when touch_out' do
-      oystercard.top_up(10)
-      oystercard.touch_in(entry_station)
-      oystercard.touch_out(exit_station)
-      expect(oystercard.entry_station).to eq nil
-    end
-  end
 end
