@@ -9,7 +9,7 @@ class Oystercard
   end
 
   def top_up(money)
-    fail "Maximum limit of £#{Oystercard::MAX_LIMIT}." if balance >= MAX_LIMIT
+    fail "Reach limit of £#{MAX_LIMIT}." if reach_limit?
     self.balance += money
   end
 
@@ -29,4 +29,9 @@ class Oystercard
     true
   end
 
+  private
+
+    def reach_limit?
+      balance >= MAX_LIMIT
+    end
 end
