@@ -1,6 +1,6 @@
 describe 'User Stories' do
 
-  context 'when there\'s balance' do
+  context 'when balance is show' do
     it 'shows default balance of 0' do
       oystercard = Oystercard.new
       expect(oystercard.balance).to eq 0
@@ -28,22 +28,61 @@ describe 'User Stories' do
       expect(oystercard.balance).to eq 60 
     end
 
-    it 'allows touch in' do
-      oystercard = Oystercard.new
-      oystercard.top_up(90)
-      expect { oystercard.touch_in }.not_to raise_error
-    end
-
-    it 'check if you\'re in journey' do
-      oystercard = Oystercard.new
-      oystercard.touch_in
-      expect(oystercard).to be_in_journey
-    end
-
     it 'allows touch out' do
       oystercard = Oystercard.new
-      oystercard.touch_in
+      oystercard.touch_out
       expect { oystercard.touch_out }.not_to raise_error
     end
   end 
+
+  describe '#touch_in' do
+    context 'when balance below £1' do
+      it 'raise an error' do
+        oystercard = Oystercard.new
+        oystercard.top_up(0.50)
+        oystercard.balance < 1
+        message = "Not enough fund for this journey" 
+        expect { oystercard.touch_in }.to raise_error message 
+      end
+    end
+
+    context 'when balance above £1' do
+      it 'allows touch_in' do
+        oystercard = Oystercard.new
+        oystercard.top_up(5)
+        oystercard.balance > 1
+        expect(oystercard.touch_in).to be true 
+      end
+    end
+  end
+
+  describe '#in_journey?' do
+    context 'when successfully touch in' do
+      it 'begins a journey' do
+        oystercard = Oystercard.new
+        oystercard.top_up(5)
+        oystercard.touch_in
+        expect(oystercard.in_journey?).to be true
+      end
+    end
+
+    context 'when unsuccessfully touch in' do
+      it 'cannot be on a jounery' do
+        oystercard = Oystercard.new
+        oystercard.top_up(0.50)
+        oystercard.touch_in
+        expect(oystercard.in_journey?).to be false
+      end
+    end
+  end
 end
+
+
+
+
+
+
+
+
+
+

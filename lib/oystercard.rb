@@ -18,7 +18,12 @@ class Oystercard
   end
 
   def touch_in
-  
+    if below_minimum?
+      fail "Not enough fund for this journey"
+      return false
+    else
+      true
+    end
   end
 
   def touch_out
@@ -26,6 +31,7 @@ class Oystercard
   end
 
   def in_journey?
+    false if touch_in
     true
   end
 
@@ -33,6 +39,10 @@ class Oystercard
 
     def reach_limit?
       balance >= MAX_LIMIT
+    end
+
+    def below_minimum?
+      balance < 1
     end
 end
 

@@ -26,17 +26,42 @@ describe Oystercard do
   end
 
   describe '#touch_in' do
-    it { is_expected.to respond_to :touch_in }
+    context 'when balance below £1' do
+      it 'raises an error' do
+        oystercard.top_up(0.50)
+        message = "Not enough fund for this journey" 
+        expect { oystercard.touch_in }.to raise_error message
+      end
+    end
+
+    context 'when balance above £1' do
+      it 'allows touch in' do
+        oystercard.top_up(5)
+        expect(oystercard.touch_in).to be true
+      end
+    end
+  end
+
+  describe '#in_journey?' do
+    context 'when successfully touch in' do
+      it 'begins on a journey' do
+        oystercard.top_up(5)
+        oystercard.touch_in
+        expect(oystercard.in_journey?).to be true
+      end
+    end
+
+    context 'when unsuccessfully touch in' do
+      it 'cannot be on a journey' do
+        oystercard.top_up(0.50)
+        oystercard.touch_in
+        expect(oystercard.in_journey?).to be false
+      end
+    end
   end
 
   describe '#touch_out' do
     it { is_expected.to respond_to :touch_out }
   end 
-
-  describe '#in_journey' do
-    it 'is in journey' do
-      oystercard.touch_in
-      expect(oystercard).to be_in_journey
-    end
-  end
+  
 end
