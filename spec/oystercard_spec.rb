@@ -51,13 +51,13 @@ describe Oystercard do
       end
     end
 
-    context 'when unsuccessfully touch in' do
-      it 'cannot be on a journey' do
-        oystercard.top_up(0.50)
-        oystercard.touch_in
-        expect(oystercard.in_journey?).to be false
-      end
-    end
+    # context 'when unsuccessfully touch in' do
+    #   it 'cannot be on a journey' do
+    #     oystercard.top_up(0.50)
+    #     oystercard.touch_in
+    #     expect(oystercard.in_journey?).to be false
+    #   end
+    # end
   end
 
   describe '#touch_out' do

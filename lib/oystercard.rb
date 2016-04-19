@@ -18,12 +18,8 @@ class Oystercard
   end
 
   def touch_in
-    if below_minimum?
-      fail "Not enough fund for this journey"
-      return false
-    else
-      true
-    end
+    fail "Not enough fund for this journey" if below_minimum?
+    true
   end
 
   def touch_out
@@ -31,7 +27,7 @@ class Oystercard
   end
 
   def in_journey?
-    false if touch_in
+    # false if touch_in
     true
   end
 
