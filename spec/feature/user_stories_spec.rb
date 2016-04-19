@@ -21,13 +21,6 @@ describe 'User Stories' do
       expect(oystercard.balance).to eq 10
     end
 
-    it 'deducts fare from oystercard' do
-      oystercard = Oystercard.new
-      oystercard.top_up(90)
-      oystercard.deduct(30)
-      expect(oystercard.balance).to eq 60 
-    end
-
     it 'allows touch out' do
       oystercard = Oystercard.new
       oystercard.touch_out
@@ -40,7 +33,7 @@ describe 'User Stories' do
       it 'raise an error' do
         oystercard = Oystercard.new
         oystercard.top_up(0.50)
-        oystercard.balance < 1
+        oystercard.balance < Oystercard::MIN_FARE
         message = "Not enough fund for this journey" 
         expect { oystercard.touch_in }.to raise_error message 
       end
@@ -50,7 +43,7 @@ describe 'User Stories' do
       it 'allows touch_in' do
         oystercard = Oystercard.new
         oystercard.top_up(5)
-        oystercard.balance > 1
+        oystercard.balance > Oystercard::MIN_FARE
         expect(oystercard.touch_in).to be true 
       end
     end
@@ -74,6 +67,14 @@ describe 'User Stories' do
     #     expect(oystercard.in_journey?).to be false
     #   end
     # end
+  end
+
+  it 'deducts amount after each journey' do
+    oystercard = Oystercard.new
+    oystercard.top_up(90)
+    oystercard.touch_in
+    oystercard.touch_out
+    expect(oystercard.balance).to eq 89
   end
 end
 

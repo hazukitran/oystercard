@@ -1,6 +1,7 @@
 class Oystercard
 
   MAX_LIMIT = 90
+  MIN_FARE = 1
 
   attr_accessor :balance
 
@@ -13,17 +14,13 @@ class Oystercard
     self.balance += money
   end
 
-  def deduct(spending)
-    self.balance -= spending
-  end
-
   def touch_in
     fail "Not enough fund for this journey" if below_minimum?
     true
   end
 
   def touch_out
-
+    deduct(MIN_FARE)
   end
 
   def in_journey?
@@ -38,7 +35,11 @@ class Oystercard
     end
 
     def below_minimum?
-      balance < 1
+      balance < MIN_FARE
+    end
+
+    def deduct(spending)
+      self.balance -= spending
     end
 end
 

@@ -19,12 +19,6 @@ describe Oystercard do
     expect { oystercard.top_up(1) }.to raise_error message
   end
 
-  it 'deduct money when used' do
-    oystercard.top_up(90)
-    oystercard.deduct(30)
-    expect(oystercard.balance).to eq 60
-  end
-
   describe '#touch_in' do
     context 'when balance below £1' do
       it 'raises an error' do
@@ -60,8 +54,14 @@ describe Oystercard do
     # end
   end
 
+  it 'deducts amount after each journey' do
+    oystercard.top_up(90)
+    oystercard.touch_in
+    expect{ oystercard.touch_out }.to change{oystercard.balance }.by(-1)
+  end
+
   describe '#touch_out' do
     it { is_expected.to respond_to :touch_out }
   end 
-  
+
 end
