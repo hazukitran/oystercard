@@ -2,7 +2,7 @@ require 'oystercard'
 
 describe Oystercard do
 
-  subject(:oystercard) { described_class.new }
+  subject(:oystercard) { described_class.new(:journey_log) }
   let(:entry_station) { double(:entry_station, name: 'Bank') }
   let(:exit_station) { double(:exit_station, name: 'Old Street') }
   let(:journey) { {entry_station: entry_station, exit_station: exit_station}}
@@ -33,14 +33,14 @@ describe Oystercard do
       it 'raises an error' do
         oystercard.top_up(0.50)
         message = "Not enough fund for this journey" 
-        expect { oystercard.touch_in(entry_station) }.to raise_error message
+        expect { oystercard.touch_in (entry_station)}.to raise_error message
       end
     end
 
     context 'when balance above £1' do
       it 'allows touch in' do
         oystercard.top_up(5)
-        expect(oystercard.touch_in(entry_station)).to be entry_station
+        expect(oystercard.touch_in(entry_station)).to eq entry_station
       end
     end
   end

@@ -1,14 +1,12 @@
-require_relative 'journey'
-
 class Oystercard
 
   MAX_LIMIT = 90
   MIN_FARE = 1
 
-  attr_reader :balance, :journey
+  attr_reader :balance
 
-  def initialize(journey = Journey.new)
-    @journey = journey
+  def initialize(journey_log = JourneyLog.new)
+    @journey_log = journey_log
     @balance = 0
   end
 
@@ -17,13 +15,13 @@ class Oystercard
     @balance += money
   end
 
-  def touch_in(station)
+  def touch_in(entry_station)
     fail "Not enough fund for this journey" if below_minimum?
-    journey.start(station)
+    JourneyLog.new.start(entry_station)   #why I can't use @journey_log
   end
 
-  def touch_out(station)
-    journey.finish(station)
+  def touch_out(exit_station) 
+    JourneyLog.new.finish(exit_station)   #same here
     deduct(MIN_FARE)
   end
 
