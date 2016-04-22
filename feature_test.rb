@@ -14,6 +14,7 @@ log = JourneyLog.new
 
 #Scenario_03
 card.top_up(90)
+p card.touch_in(:station)
 p log.journeys
 #1 or 6
 

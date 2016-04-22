@@ -9,7 +9,6 @@ class JourneyLog
 
   def start(entry_station)
     @journey_class.start_journey(entry_station)
-
   end
 
   def finish(exit_station)

@@ -2,10 +2,11 @@ require 'oystercard'
 
 describe Oystercard do
 
-  subject(:oystercard) { described_class.new(:journey_log) }
+  subject(:oystercard) { described_class.new(journey_log) }
   let(:entry_station) { double(:entry_station, name: 'Bank') }
   let(:exit_station) { double(:exit_station, name: 'Old Street') }
-  let(:journey) { {entry_station: entry_station, exit_station: exit_station}}
+  let(:journey) { double :journey, entry_station: entry_station, exit_station: exit_station }
+  let(:journey_log) { double :journey_log, start: entry_station, finish: entry_station }
 
   it 'defaults with balance of 0' do
     expect(oystercard.balance).to eq 0
@@ -25,7 +26,7 @@ describe Oystercard do
   it 'deducts amount after each journey' do
     oystercard.top_up(90)
     oystercard.touch_in(entry_station)
-    expect{ oystercard.touch_out(exit_station) }.to change{oystercard.balance }.by(-1)
+    expect{ oystercard.touch_out(exit_station) }.to change{ oystercard.balance }.by(-1)
   end
 
   describe '#touch_in' do

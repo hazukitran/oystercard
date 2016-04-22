@@ -3,7 +3,7 @@ class Oystercard
   MAX_LIMIT = 90
   MIN_FARE = 1
 
-  attr_reader :balance
+  attr_reader :balance, :journey_log
 
   def initialize(journey_log = JourneyLog.new)
     @journey_log = journey_log
@@ -17,11 +17,11 @@ class Oystercard
 
   def touch_in(entry_station)
     fail "Not enough fund for this journey" if below_minimum?
-    JourneyLog.new.start(entry_station)   #why I can't use @journey_log
+    journey_log.start(entry_station)
   end
 
   def touch_out(exit_station) 
-    JourneyLog.new.finish(exit_station)   #same here
+    journey_log.finish(exit_station)
     deduct(MIN_FARE)
   end
 
