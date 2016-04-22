@@ -26,6 +26,7 @@ describe Oystercard do
   it 'deducts amount after each journey' do
     oystercard.top_up(90)
     oystercard.touch_in(entry_station)
+    allow(journey_log).to receive(:fare).and_return 1
     expect{ oystercard.touch_out(exit_station) }.to change{ oystercard.balance }.by(-1)
   end
 

@@ -33,4 +33,39 @@ describe JourneyLog do
       expect(journey_log.journeys).to include journey_class
     end
   end
+
+  describe "#fare" do
+    before do
+      allow(journey_class).to receive(:start_journey)
+      allow(journey_class).to receive(:finish_journey)
+      allow(journey_class).to receive(:complete?)
+    end
+
+    context 'when journey is complete' do
+      it 'returns minimum fare' do
+        journey_log.start(entry_station)
+        journey_log.finish(exit_station)
+        allow(journey_class).to receive(:complete?).and_return(true)
+        expect(journey_log.fare).to eq 1
+      end
+    end
+
+    context 'when journey is uncomplete' do
+      it 'returns penalty fare of 6' do
+        journey_log.start(entry_station)
+        allow(journey_class).to receive(:complete?).and_return(false)
+        expect(journey_log.fare).to eq 6
+      end
+    end
+
+    context 'given 2 different stations' do
+
+      it 'calculates the fare between zone 1 & 2' do
+        journey_log.start(entry_station)
+        journey_log.finish(exit_station)
+        allow(journey_class).to receive(:complete?).and_return(true)
+        expect(journey_log.fare).to eq 2
+      end
+    end
+  end
 end

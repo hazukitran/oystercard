@@ -1,9 +1,10 @@
 require 'journey'
 
 describe Journey do 
+  
   let(:oystercard) { double :oystercard }
-  let(:entry_station) { double :station, name: "Bank" }
-  let(:exit_station) { double :station, name: "Old Street" }
+  let(:entry_station) { double :station, name: "Bank", zone: 1 }
+  let(:exit_station) { double :station, name: "Waterloo", zone: 2 }
   subject(:journey) { described_class.new }
 
   it 'check if journey is complete' do
@@ -19,18 +20,4 @@ describe Journey do
     expect(journey.finish_journey(exit_station)).to eq exit_station
   end
 
-  context 'when journey is complete' do
-    it 'returns minimum fare' do
-      allow(journey).to receive(:complete?).and_return(true)
-      expect(journey.fare).to eq 1
-    end
-  end
-
-  context 'when journey is uncomplete' do
-    it 'returns penalty fare of 6' do
-      allow(journey).to receive(:complete?).and_return(false)
-      expect(journey.fare).to eq 6
-    end
-  end
-    
 end

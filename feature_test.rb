@@ -4,7 +4,7 @@ require './lib/journey'
 require './lib/journey_log'
 
 #Initialize objects
-card = Oystercard.new
+card = Oystercard.new(JourneyLog.new)
 station = Station.new(name: 'Bank', zone: 1)
 exit_station = Station.new(name: 'Old Street', zone: 1)
 journey = Journey.new
@@ -14,11 +14,16 @@ log = JourneyLog.new
 
 #Scenario_03
 card.top_up(90)
-p card.touch_in(:station)
-p card.touch_out(:station)
-p journey.start_journey(:station)
-p log.journey_class
-p log.journeys
+p card.touch_in(station)
+p card.touch_out(exit_station)
+p station.zone
+p exit_station.zone
+p journey.entry_zone
+p journey.entry_station
+p journey.exit_station
+p journey.complete?
+p log.fare
+# p log.journeys
 #1 or 6
 
 #Scenario_02

@@ -1,15 +1,10 @@
 class Station
 
-	def initialize(hash)
-		@hash = hash
-	end
+  attr_accessor :name, :zone
 
-	def name
-		@hash[:name]
-	end
-
-	def zone
-		@hash[:zone]
-	end
-
+  def initialize(name:, zone:)
+    @name = name
+    @zone = zone
+  end
+  
 end
