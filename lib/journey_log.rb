@@ -18,7 +18,7 @@ class JourneyLog
   end
 
   def journeys
-    @journeys.dup   #why @journeys = [] still?
+    @journeys.dup
   end
 
   private 

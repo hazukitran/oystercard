@@ -25,6 +25,11 @@ describe JourneyLog do
 
   describe "#journeys" do
     it 'returns a list of previous journey' do
+      allow(journey_class).to receive(:start_journey)
+      allow(journey_class).to receive(:finish_journey)
+      allow(journey_class).to receive(:complete?)
+      journey_log.start(entry_station)
+      journey_log.finish(exit_station)
       expect(journey_log.journeys).to include journey_class
     end
   end

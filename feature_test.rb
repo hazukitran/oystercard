@@ -15,6 +15,9 @@ log = JourneyLog.new
 #Scenario_03
 card.top_up(90)
 p card.touch_in(:station)
+p card.touch_out(:station)
+p journey.start_journey(:station)
+p log.journey_class
 p log.journeys
 #1 or 6
 
